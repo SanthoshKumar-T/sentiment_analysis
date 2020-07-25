@@ -22,20 +22,18 @@ def prediction(nlp_model, test_data):
 	prediction_result = [textcat.labels[label] for label in predicted_labels]
 	return prediction_result
 	
-	
 def train_model(nlp_model, train_data):
 	random.seed(1)
 	spacy.util.fix_random_seed(1)
 	nlp_optimizer = nlp_model.begin_training()
-
 	losses = {}
-
 	for epoch in range(10):
 		random.shuffle(train_data)
 		batches = minibatch(train_data, size=8)
 		for batch in batches:
 			texts, labels = zip(*batch)
 			nlp_model.update(texts, labels, sgd=nlp_optimizer, losses=losses)
+			
 def main():
 	#Loading train and test data	
 	dataset_train = pd.read_csv('G:\machine_learning\sentiment\Train.csv')
